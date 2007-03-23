@@ -1,5 +1,6 @@
 #
 Summary:	A library for decoding RAW images
+Summary(pl.UTF-8):	Biblioteka dekodjąca obrazy w formacie RAW
 Name:		libopenraw
 Version:	0.0.2
 Release:	0.2
@@ -20,9 +21,18 @@ is that [WWW]dcraw is not suited for easy integration into
 applications, and there is a need for an easy to use API to build free
 software digital image processing application.
 
+%description -l pl.UTF-8
+libopenraw jest projektem dostarczającym wolnodostępną
+implementację dekodera plików w formacie RAW obsługiwanych przez
+cyfrowe aparaty fotograficzne. Jednym z głównych powodów powstania
+tej biblioteki jest to, że [WWW]dcraw nie jest przystosowany do
+łatwej integracji z aplikacjami, a istnieje potrzeba stworzenia
+łatwego w użyciu API do budowy wolnodostępnej aplikacji
+przetwarzania cyfrowych obrazów.
+
 %package devel
 Summary:	Header files for libopenraw library
-Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libopenraw.
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libopenraw
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
