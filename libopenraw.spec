@@ -2,7 +2,7 @@
 Summary:	A library for decoding RAW images
 Name:		libopenraw
 Version:	0.0.2
-Release:	1
+Release:	0.1
 License:	- (enter GPL/GPL v2/LGPL/BSD/BSD-like/other license name here)
 Group:		Applications
 Source0:	http://libopenraw.freedesktop.org/download/%{name}-%{version}.tar.gz
