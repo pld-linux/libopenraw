@@ -9,8 +9,9 @@ Source0:	http://libopenraw.freedesktop.org/download/%{name}-%{version}.tar.gz
 # Source0-md5:	eae40ecaa92f69d99b27ae3bad8aa8ae
 URL:		http://libopenraw.freedesktop.org/
 BuildRequires:	boost-bind-devel
-BuildRequires:	gtk+2-devel
+BuildRequires:	gtk+2-devel >= 1:2.0.0
 BuildRequires:	libjpeg-devel
+BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -34,6 +35,8 @@ Summary:	Header files for libopenraw library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libopenraw
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	libjpeg-devel
+Requires:	libstdc++-devel
 
 %description devel
 Header files for libopenraw library.
