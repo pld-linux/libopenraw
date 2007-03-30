@@ -3,7 +3,7 @@ Summary(pl.UTF-8):	Biblioteka dekodująca obrazy w formacie RAW
 Name:		libopenraw
 Version:	0.0.2
 Release:	1
-License:	GPL v2.1
+License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://libopenraw.freedesktop.org/download/%{name}-%{version}.tar.gz
 # Source0-md5:	eae40ecaa92f69d99b27ae3bad8aa8ae
