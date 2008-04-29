@@ -8,7 +8,7 @@ Group:		Libraries
 Source0:	http://libopenraw.freedesktop.org/download/%{name}-%{version}.tar.gz
 # Source0-md5:	eae40ecaa92f69d99b27ae3bad8aa8ae
 URL:		http://libopenraw.freedesktop.org/
-BuildRequires:	boost-bind-devel
+BuildRequires:	boost-devel >= 1.35.0
 BuildRequires:	gtk+2-devel >= 1:2.0.0
 BuildRequires:	libjpeg-devel
 BuildRequires:	pkgconfig
