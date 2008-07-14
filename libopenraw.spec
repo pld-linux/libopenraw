@@ -1,16 +1,17 @@
 Summary:	A library for decoding RAW images
 Summary(pl.UTF-8):	Biblioteka dekodująca obrazy w formacie RAW
 Name:		libopenraw
-Version:	0.0.2
-Release:	2
+Version:	0.0.5
+Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://libopenraw.freedesktop.org/download/%{name}-%{version}.tar.gz
-# Source0-md5:	eae40ecaa92f69d99b27ae3bad8aa8ae
+# Source0-md5:	90f9038cc6b47374ea1dd9aa347dfe5a
 URL:		http://libopenraw.freedesktop.org/
 BuildRequires:	boost-devel >= 1.35.0
 BuildRequires:	gtk+2-devel >= 1:2.0.0
 BuildRequires:	libjpeg-devel
+BuildRequires:	libxml2-devel >= 1:2.5.0
 BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -56,6 +57,44 @@ Static libopenraw library.
 %description static -l pl.UTF-8
 Statyczna biblioteka libopenraw.
 
+%package gnome
+Summary:	Library for decoding RAW images - GTK+/GNOME support
+Summary(pl.UTF-8):	Biblioteka dekodująca obrazy w formacie RAW - obsługa GTK+/GNOME
+Group:		X11/Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description gnome
+Library for decoding RAW images - GTK+/GNOME support.
+
+%description gnome -l pl.UTF-8
+Biblioteka dekodująca obrazy w formacie RAW - obsługa GTK+/GNOME.
+
+%package gnome-devel
+Summary:	Header file for libopenrawgnome library
+Summary(pl.UTF-8):	Plik nagłówkowy biblioteki libopenrawgnome
+Group:		X11/Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-gnome = %{version}-%{release}
+Requires:	gtk+2-devel >= 1:2.0.0
+
+%description gnome-devel
+Header file for libopenrawgnome library.
+
+%description gnome-devel -l pl.UTF-8
+Plik nagłówkowy biblioteki libopenrawgnome.
+
+%package gnome-static
+Summary:	Static libopenrawgnome library
+Summary(pl.UTF-8):	Statyczna biblioteka libopenrawgnome
+Group:		X11/Development/Libraries
+Requires:	%{name}-gnome-devel = %{version}-%{release}
+
+%description gnome-static
+Static libopenrawgnome library.
+
+%description gnome-static -l pl.UTF-8
+Statyczna biblioteka libopenrawgnome.
+
 %prep
 %setup -q
 
@@ -75,18 +114,39 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
+%post	gnome -p /sbin/ldconfig
+%postun	gnome -p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README TODO
-%attr(755,root,root) %{_libdir}/*.so.*.*.*
+%attr(755,root,root) %{_libdir}/libopenraw.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libopenraw.so.1
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/*.so
-%{_libdir}/*.la
-%{_includedir}/*
-%{_pkgconfigdir}/*.pc
+%attr(755,root,root) %{_libdir}/libopenraw.so
+%{_libdir}/libopenraw.la
+%dir %{_includedir}/libopenraw-1.0
+%{_includedir}/libopenraw-1.0/libopenraw
+%{_pkgconfigdir}/libopenraw-1.0.pc
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/*.a
+%{_libdir}/libopenraw.a
+
+%files gnome
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libopenrawgnome.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libopenrawgnome.so.1
+
+%files gnome-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libopenrawgnome.so
+%{_libdir}/libopenrawgnome.la
+%{_includedir}/libopenraw-1.0/libopenraw-gnome
+%{_pkgconfigdir}/libopenraw-gnome-1.0.pc
+
+%files gnome-static
+%defattr(644,root,root,755)
+%{_libdir}/libopenrawgnome.a
