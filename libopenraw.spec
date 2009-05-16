@@ -1,19 +1,29 @@
 Summary:	A library for decoding RAW images
 Summary(pl.UTF-8):	Biblioteka dekodująca obrazy w formacie RAW
 Name:		libopenraw
-Version:	0.0.5
+Version:	0.0.8
 Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://libopenraw.freedesktop.org/download/%{name}-%{version}.tar.gz
-# Source0-md5:	90f9038cc6b47374ea1dd9aa347dfe5a
+# Source0-md5:	fc26f146586a4b601326130bce6ffd88
 URL:		http://libopenraw.freedesktop.org/
 BuildRequires:	boost-devel >= 1.35.0
 BuildRequires:	gtk+2-devel >= 1:2.0.0
 BuildRequires:	libjpeg-devel
 BuildRequires:	libxml2-devel >= 1:2.5.0
 BuildRequires:	pkgconfig
+Requires(post,postun):	gtk+2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%if "%{_lib}" != "lib"
+%define         libext          %(lib="%{_lib}"; echo ${lib#lib})
+%define         gtketcdir	/etc/gtk%{libext}-2.0
+%define         pqext           -%{libext}
+%else
+%define         gtketcdir	/etc/gtk-2.0
+%define         pqext           %{nil}
+%endif
 
 %description
 libopenraw is an ongoing project to provide a free software
@@ -108,11 +118,22 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+%{__rm} -f $RPM_BUILD_ROOT%{_libdir}/gtk-2.0/*/loaders/*.{a,la}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	-p /sbin/ldconfig
-%postun	-p /sbin/ldconfig
+%post
+/sbin/ldconfig
+umask 022
+%{_bindir}/gdk-pixbuf-query-loaders%{pqext} > %{gtketcdir}/gdk-pixbuf.loaders
+
+%postun
+/sbin/ldconfig
+umask 022
+if [ -x %{_bindir}/gdk-pixbuf-query-loaders%{pqext} ]; then
+	%{_bindir}/gdk-pixbuf-query-loaders%{pqext} > %{gtketcdir}/gdk-pixbuf.loaders
+fi
 
 %post	gnome -p /sbin/ldconfig
 %postun	gnome -p /sbin/ldconfig
@@ -122,6 +143,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_libdir}/libopenraw.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libopenraw.so.1
+%attr(755,root,root) %{_libdir}/gtk-2.0/*/loaders/libopenraw_pixbuf.so
 
 %files devel
 %defattr(644,root,root,755)
