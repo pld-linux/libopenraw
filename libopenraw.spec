@@ -17,12 +17,12 @@ Requires(post,postun):	gtk+2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %if "%{_lib}" != "lib"
-%define         libext          %(lib="%{_lib}"; echo ${lib#lib})
-%define         gtketcdir	/etc/gtk%{libext}-2.0
-%define         pqext           -%{libext}
+%define		libext		%(lib="%{_lib}"; echo ${lib#lib})
+%define		gtketcdir	/etc/gtk%{libext}-2.0
+%define		pqext		-%{libext}
 %else
-%define         gtketcdir	/etc/gtk-2.0
-%define         pqext           %{nil}
+%define		gtketcdir	/etc/gtk-2.0
+%define		pqext		%{nil}
 %endif
 
 %description
