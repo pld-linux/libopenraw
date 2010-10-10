@@ -2,26 +2,27 @@ Summary:	A library for decoding RAW images
 Summary(pl.UTF-8):	Biblioteka dekodująca obrazy w formacie RAW
 Name:		libopenraw
 Version:	0.0.8
-Release:	3
+Release:	4
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://libopenraw.freedesktop.org/download/%{name}-%{version}.tar.gz
 # Source0-md5:	fc26f146586a4b601326130bce6ffd88
+Patch0:		%{name}-loaders-location.patch
 URL:		http://libopenraw.freedesktop.org/
+BuildRequires:	autoconf >= 2.50
+BuildRequires:	automake
 BuildRequires:	boost-devel >= 1.35.0
 BuildRequires:	gtk+2-devel >= 1:2.0.0
 BuildRequires:	libjpeg-devel
 BuildRequires:	libxml2-devel >= 1:2.5.0
 BuildRequires:	pkgconfig
-Requires(post,postun):	gtk+2
+Requires(post,postun):	gdk-pixbuf2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %if "%{_lib}" != "lib"
 %define		libext		%(lib="%{_lib}"; echo ${lib#lib})
-%define		gtketcdir	/etc/gtk%{libext}-2.0
 %define		pqext		-%{libext}
 %else
-%define		gtketcdir	/etc/gtk-2.0
 %define		pqext		%{nil}
 %endif
 
@@ -107,18 +108,23 @@ Statyczna biblioteka libopenrawgnome.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
+%{__aclocal} -I m4
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure
-%{__make}
+%{__make} V=1
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
+%{__make} V=1 install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__rm} -f $RPM_BUILD_ROOT%{_libdir}/gtk-2.0/*/loaders/*.{a,la}
+%{__rm} -f $RPM_BUILD_ROOT%{_libdir}/gdk-pixbuf-2.0/*/loaders/*.{a,la}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -126,13 +132,13 @@ rm -rf $RPM_BUILD_ROOT
 %post
 /sbin/ldconfig
 umask 022
-%{_bindir}/gdk-pixbuf-query-loaders%{pqext} > %{gtketcdir}/gdk-pixbuf.loaders
+%{_bindir}/gdk-pixbuf-query-loaders%{pqext} --update-cache
 
 %postun
 /sbin/ldconfig
 umask 022
 if [ -x %{_bindir}/gdk-pixbuf-query-loaders%{pqext} ]; then
-	%{_bindir}/gdk-pixbuf-query-loaders%{pqext} > %{gtketcdir}/gdk-pixbuf.loaders
+	%{_bindir}/gdk-pixbuf-query-loaders%{pqext} --update-cache
 fi
 
 %post	gnome -p /sbin/ldconfig
@@ -143,7 +149,7 @@ fi
 %doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_libdir}/libopenraw.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libopenraw.so.1
-%attr(755,root,root) %{_libdir}/gtk-2.0/*/loaders/libopenraw_pixbuf.so
+%attr(755,root,root) %{_libdir}/gdk-pixbuf-2.0/*/loaders/libopenraw_pixbuf.so
 
 %files devel
 %defattr(644,root,root,755)
