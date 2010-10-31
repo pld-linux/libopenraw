@@ -12,11 +12,10 @@ URL:		http://libopenraw.freedesktop.org/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	boost-devel >= 1.35.0
-BuildRequires:	gtk+2-devel >= 1:2.0.0
+BuildRequires:	gdk-pixbuf2-devel >= 2.0.0
 BuildRequires:	libjpeg-devel
 BuildRequires:	libxml2-devel >= 1:2.5.0
 BuildRequires:	pkgconfig
-Requires(post,postun):	gdk-pixbuf2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %if "%{_lib}" != "lib"
@@ -72,7 +71,10 @@ Statyczna biblioteka libopenraw.
 Summary:	Library for decoding RAW images - GTK+/GNOME support
 Summary(pl.UTF-8):	Biblioteka dekodująca obrazy w formacie RAW - obsługa GTK+/GNOME
 Group:		X11/Libraries
+Requires(post,postun):	/sbin/ldconfig
+Requires(post,postun):	gdk-pixbuf2 >= 2.0.0
 Requires:	%{name} = %{version}-%{release}
+Requires:	gdk-pixbuf2 >= 2.0.0
 
 %description gnome
 Library for decoding RAW images - GTK+/GNOME support.
@@ -86,7 +88,7 @@ Summary(pl.UTF-8):	Plik nagłówkowy biblioteki libopenrawgnome
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	%{name}-gnome = %{version}-%{release}
-Requires:	gtk+2-devel >= 1:2.0.0
+Requires:	gdk-pixbuf2-devel >= 1:2.0.0
 
 %description gnome-devel
 Header file for libopenrawgnome library.
@@ -121,35 +123,35 @@ Statyczna biblioteka libopenrawgnome.
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} V=1 install \
-	DESTDIR=$RPM_BUILD_ROOT
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT \
+	V=1
 
-%{__rm} -f $RPM_BUILD_ROOT%{_libdir}/gdk-pixbuf-2.0/*/loaders/*.{a,la}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/gdk-pixbuf-2.0/*/loaders/*.{a,la}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
+
+%post gnome
 /sbin/ldconfig
 umask 022
 %{_bindir}/gdk-pixbuf-query-loaders%{pqext} --update-cache
 
-%postun
+%postun gnome
 /sbin/ldconfig
 umask 022
 if [ -x %{_bindir}/gdk-pixbuf-query-loaders%{pqext} ]; then
 	%{_bindir}/gdk-pixbuf-query-loaders%{pqext} --update-cache
 fi
 
-%post	gnome -p /sbin/ldconfig
-%postun	gnome -p /sbin/ldconfig
-
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_libdir}/libopenraw.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libopenraw.so.1
-%attr(755,root,root) %{_libdir}/gdk-pixbuf-2.0/*/loaders/libopenraw_pixbuf.so
 
 %files devel
 %defattr(644,root,root,755)
@@ -167,6 +169,7 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libopenrawgnome.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libopenrawgnome.so.1
+%attr(755,root,root) %{_libdir}/gdk-pixbuf-2.0/*/loaders/libopenraw_pixbuf.so
 
 %files gnome-devel
 %defattr(644,root,root,755)
