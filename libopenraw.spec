@@ -88,7 +88,7 @@ Summary(pl.UTF-8):	Plik nagłówkowy biblioteki libopenrawgnome
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	%{name}-gnome = %{version}-%{release}
-Requires:	gdk-pixbuf2-devel >= 1:2.0.0
+Requires:	gdk-pixbuf2-devel >= 2.0.0
 
 %description gnome-devel
 Header file for libopenrawgnome library.
