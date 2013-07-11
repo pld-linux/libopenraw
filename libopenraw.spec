@@ -1,18 +1,18 @@
 Summary:	A library for decoding RAW images
 Summary(pl.UTF-8):	Biblioteka dekodująca obrazy w formacie RAW
 Name:		libopenraw
-Version:	0.0.8
-Release:	6
+Version:	0.0.9
+Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
-Source0:	http://libopenraw.freedesktop.org/download/%{name}-%{version}.tar.gz
-# Source0-md5:	fc26f146586a4b601326130bce6ffd88
-Patch0:		%{name}-loaders-location.patch
+Source0:	http://libopenraw.freedesktop.org/download/%{name}-%{version}.tar.bz2
+# Source0-md5:	3611d8aea870d25314665ef53093288e
 URL:		http://libopenraw.freedesktop.org/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	boost-devel >= 1.35.0
 BuildRequires:	gdk-pixbuf2-devel >= 2.0.0
+BuildRequires:	glib2-devel >= 2.0.0
 BuildRequires:	libjpeg-devel
 BuildRequires:	libxml2-devel >= 1:2.5.0
 BuildRequires:	pkgconfig
@@ -75,6 +75,7 @@ Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	gdk-pixbuf2 >= 2.0.0
 Requires:	%{name} = %{version}-%{release}
 Requires:	gdk-pixbuf2 >= 2.0.0
+Requires:	glib2 >= 2.0.0
 
 %description gnome
 Library for decoding RAW images - GTK+/GNOME support.
@@ -89,6 +90,7 @@ Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	%{name}-gnome = %{version}-%{release}
 Requires:	gdk-pixbuf2-devel >= 2.0.0
+Requires:	glib2-devel >= 2.0.0
 
 %description gnome-devel
 Header file for libopenrawgnome library.
@@ -110,7 +112,6 @@ Statyczna biblioteka libopenrawgnome.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %{__aclocal} -I m4
