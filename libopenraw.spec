@@ -1,12 +1,12 @@
 Summary:	A library for decoding RAW images
 Summary(pl.UTF-8):	Biblioteka dekodująca obrazy w formacie RAW
 Name:		libopenraw
-Version:	0.1.0
+Version:	0.1.1
 Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
-Source0:	https://libopenraw.freedesktop.org/download/%{name}-%{version}.tar.bz2
-# Source0-md5:	205d70837cde0e9146157e2fc09e9d66
+Source0:	https://libopenraw.freedesktop.org/download/%{name}-%{version}.tar.xz
+# Source0-md5:	51c31a605074613dbb2e97541ff83030
 URL:		https://libopenraw.freedesktop.org/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
