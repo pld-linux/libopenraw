@@ -1,12 +1,12 @@
 Summary:	A library for decoding RAW images
 Summary(pl.UTF-8):	Biblioteka dekodująca obrazy w formacie RAW
 Name:		libopenraw
-Version:	0.1.1
+Version:	0.1.2
 Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	https://libopenraw.freedesktop.org/download/%{name}-%{version}.tar.xz
-# Source0-md5:	51c31a605074613dbb2e97541ff83030
+# Source0-md5:	7f498b1b8ab9154335f7d9023f7b2118
 URL:		https://libopenraw.freedesktop.org/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -128,6 +128,9 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+# obsoleted by pkg-config
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libopenraw*.la
+# dynamic modules
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/gdk-pixbuf-2.0/*/loaders/*.{a,la}
 
 %clean
@@ -157,7 +160,6 @@ fi
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libopenraw.so
-%{_libdir}/libopenraw.la
 %dir %{_includedir}/libopenraw-0.1
 %{_includedir}/libopenraw-0.1/libopenraw
 %{_pkgconfigdir}/libopenraw-0.1.pc
@@ -175,7 +177,6 @@ fi
 %files gnome-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libopenrawgnome.so
-%{_libdir}/libopenrawgnome.la
 %{_includedir}/libopenraw-0.1/libopenraw-gnome
 %{_pkgconfigdir}/libopenraw-gnome-0.1.pc
 
