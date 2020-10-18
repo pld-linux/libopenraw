@@ -1,0 +1,11 @@
+--- libopenraw-0.2.3/lib/Makefile.am.orig	2020-10-18 21:09:21.948671716 +0200
++++ libopenraw-0.2.3/lib/Makefile.am	2020-10-18 21:26:10.797676347 +0200
+@@ -89,7 +89,7 @@
+ endif
+ 
+ CARGO_TARGET_DIR=@abs_top_builddir@/lib/mp4/target
+-RUST_PATH=$(CARGO_TARGET_DIR)/@CARGO_TARGET_SUBDIR@
++RUST_PATH=$(CARGO_TARGET_DIR)/$(CARGO_TARGET_SUBDIR)
+ RUST_LIB=$(RUST_PATH)/libmp4.a
+ RUST_LIBADD=-L$(RUST_PATH) -lmp4
+ 

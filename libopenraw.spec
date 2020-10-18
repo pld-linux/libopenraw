@@ -15,6 +15,7 @@ Source1:	%{name}-%{version}-vendor.tar.xz
 # Source1-md5:	1d51cd2d97ab62335d92f82c21a54f35
 Patch0:		%{name}-pc.patch
 Patch1:		%{name}-link.patch
+Patch2:		%{name}-cargo.patch
 URL:		https://libopenraw.freedesktop.org/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -128,6 +129,7 @@ Statyczna biblioteka libopenrawgnome.
 %setup -q -b1
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 install -d .cargo
 cat >.cargo/config <<EOF
@@ -149,13 +151,21 @@ export CARGO_HOME="$(pwd)/.cargo"
 %configure \
 	--disable-silent-rules
 
-%{__make}
+%{__make} \
+%ifarch x32
+	CARGO_RELEASE_ARGS="--release --target x86_64-unknown-linux-gnux32" \
+	CARGO_TARGET_SUBDIR=x86_64-unknown-linux-gnux32/release
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT \
+%ifarch x32
+	CARGO_RELEASE_ARGS="--release --target x86_64-unknown-linux-gnux32" \
+	CARGO_TARGET_SUBDIR=x86_64-unknown-linux-gnux32/release
+%endif
 
 # obsoleted by pkg-config
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libopenraw*.la
