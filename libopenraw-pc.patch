@@ -1,0 +1,11 @@
+--- libopenraw-0.2.3/gnome/libopenraw-gnome-0.2.pc.in.orig	2020-08-09 16:37:39.000000000 +0200
++++ libopenraw-0.2.3/gnome/libopenraw-gnome-0.2.pc.in	2020-10-14 20:42:19.367237475 +0200
+@@ -6,7 +6,7 @@
+ 
+ Name: libopenraw-gnome
+ Description: Library for easy decoding of camera RAW files. Gnome support.
+-Requires: libopenraw-0.1
++Requires: libopenraw-0.2
+ Version: @VERSION@
+ Libs: -L${libdir} -lopenraw -lopenrawgnome
+ Cflags: -I${includedir}/@LIBOPENRAW_INCLUDE_BASE@ -I${includedir}
