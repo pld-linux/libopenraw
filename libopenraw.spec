@@ -7,6 +7,12 @@ License:	LGPL v2.1+
 Group:		Libraries
 Source0:	https://libopenraw.freedesktop.org/download/%{name}-%{version}.tar.xz
 # Source0-md5:	6081f678f8c06216dfb10af24bbfc85f
+# cd libopenraw-%{version}
+# cargo vendor --manifest-path lib/mp4/Cargo.toml --sync lib/mp4/mp4parse_capi/Cargo.toml --sync lib/mp4/mp4parse/Cargo.toml --no-delete --versioned-dirs
+# cd ..
+# tar cJf libopenraw-%{version}-vendor.tar.xz libopenraw-%{version}/vendor libopenraw-%{version}/lib/mp4/Cargo.lock libopenraw-%{version}/lib/mp4/mp4parse_capi/Cargo.lock libopenraw-%{version}/lib/mp4/mp4parse/Cargo.lock
+Source1:	%{name}-%{version}-vendor.tar.xz
+# Source1-md5:	1d51cd2d97ab62335d92f82c21a54f35
 Patch0:		%{name}-pc.patch
 Patch1:		%{name}-link.patch
 URL:		https://libopenraw.freedesktop.org/
@@ -119,11 +125,22 @@ Static libopenrawgnome library.
 Statyczna biblioteka libopenrawgnome.
 
 %prep
-%setup -q
+%setup -q -b1
 %patch0 -p1
 %patch1 -p1
 
+install -d .cargo
+cat >.cargo/config <<EOF
+[source.crates-io]
+replace-with = 'vendored-sources'
+
+[source.vendored-sources]
+directory = '$PWD/vendor'
+EOF
+
 %build
+export CARGO_HOME="$(pwd)/.cargo"
+
 %{__libtoolize}
 %{__aclocal} -I m4
 %{__autoconf}
