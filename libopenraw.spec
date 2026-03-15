@@ -16,15 +16,15 @@ Source1:	%{name}-%{version}-vendor.tar.xz
 Patch0:		%{name}-link.patch
 Patch1:		%{name}-cargo.patch
 URL:		https://libopenraw.freedesktop.org/
-BuildRequires:	autoconf >= 2.50
-BuildRequires:	automake
+BuildRequires:	autoconf >= 2.69
+BuildRequires:	automake >= 1:1.11
 BuildRequires:	boost-devel >= 1.60.0
 BuildRequires:	cargo
 BuildRequires:	gdk-pixbuf2-devel >= 2.0.0
 BuildRequires:	glib2-devel >= 2.0.0
 BuildRequires:	libjpeg-devel
 BuildRequires:	libstdc++-devel >= 6:5
-BuildRequires:	libtool >= 1:1.4.2
+BuildRequires:	libtool >= 2:2
 # required for testsuite
 BuildRequires:	libxml2-devel >= 1:2.5.0
 BuildRequires:	pkgconfig
@@ -190,7 +190,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README TODO
+%doc AUTHORS ChangeLog NEWS README RELEASE_NOTES TODO
 %attr(755,root,root) %{_libdir}/libopenraw.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libopenraw.so.9
 
