@@ -191,12 +191,12 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README RELEASE_NOTES TODO
-%attr(755,root,root) %{_libdir}/libopenraw.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libopenraw.so.9
+%{_libdir}/libopenraw.so.*.*.*
+%ghost %{_libdir}/libopenraw.so.9
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libopenraw.so
+%{_libdir}/libopenraw.so
 %dir %{_includedir}/libopenraw-0.3
 %{_includedir}/libopenraw-0.3/libopenraw
 %{_pkgconfigdir}/libopenraw-0.3.pc
@@ -207,13 +207,13 @@ fi
 
 %files gnome
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libopenrawgnome.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libopenrawgnome.so.9
-%attr(755,root,root) %{_libdir}/gdk-pixbuf-2.0/*/loaders/libopenraw_pixbuf.so
+%{_libdir}/libopenrawgnome.so.*.*.*
+%ghost %{_libdir}/libopenrawgnome.so.9
+%{_libdir}/gdk-pixbuf-2.0/*/loaders/libopenraw_pixbuf.so
 
 %files gnome-devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libopenrawgnome.so
+%{_libdir}/libopenrawgnome.so
 %{_includedir}/libopenraw-0.3/libopenraw-gnome
 %{_pkgconfigdir}/libopenraw-gnome-0.3.pc
 
