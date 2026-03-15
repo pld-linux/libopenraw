@@ -1,30 +1,29 @@
 Summary:	A library for decoding RAW images
 Summary(pl.UTF-8):	Biblioteka dekodująca obrazy w formacie RAW
 Name:		libopenraw
-Version:	0.2.3
+Version:	0.3.7
 Release:	1
-License:	LGPL v2.1+
+License:	LGPL v3+
 Group:		Libraries
 Source0:	https://libopenraw.freedesktop.org/download/%{name}-%{version}.tar.xz
-# Source0-md5:	6081f678f8c06216dfb10af24bbfc85f
+# Source0-md5:	07e5f2a566a69f99b553627e0f56d963
 # cd libopenraw-%{version}
 # cargo vendor --manifest-path lib/mp4/Cargo.toml --sync lib/mp4/mp4parse_capi/Cargo.toml --sync lib/mp4/mp4parse/Cargo.toml --no-delete --versioned-dirs
 # cd ..
 # tar cJf libopenraw-%{version}-vendor.tar.xz libopenraw-%{version}/vendor libopenraw-%{version}/lib/mp4/Cargo.lock libopenraw-%{version}/lib/mp4/mp4parse_capi/Cargo.lock libopenraw-%{version}/lib/mp4/mp4parse/Cargo.lock
 Source1:	%{name}-%{version}-vendor.tar.xz
-# Source1-md5:	1d51cd2d97ab62335d92f82c21a54f35
-Patch0:		%{name}-pc.patch
-Patch1:		%{name}-link.patch
-Patch2:		%{name}-cargo.patch
+# Source1-md5:	b941974953c7ceb2b0df7a437c125c1a
+Patch0:		%{name}-link.patch
+Patch1:		%{name}-cargo.patch
 URL:		https://libopenraw.freedesktop.org/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
-BuildRequires:	boost-devel >= 1.35.0
+BuildRequires:	boost-devel >= 1.60.0
 BuildRequires:	cargo
 BuildRequires:	gdk-pixbuf2-devel >= 2.0.0
 BuildRequires:	glib2-devel >= 2.0.0
 BuildRequires:	libjpeg-devel
-BuildRequires:	libstdc++-devel >= 6:4.8
+BuildRequires:	libstdc++-devel >= 6:5
 BuildRequires:	libtool >= 1:1.4.2
 # required for testsuite
 BuildRequires:	libxml2-devel >= 1:2.5.0
@@ -129,7 +128,6 @@ Statyczna biblioteka libopenrawgnome.
 %setup -q -b1
 %patch -P0 -p1
 %patch -P1 -p1
-%patch -P2 -p1
 
 install -d .cargo
 cat >.cargo/config <<EOF
@@ -194,14 +192,14 @@ fi
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_libdir}/libopenraw.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libopenraw.so.8
+%attr(755,root,root) %ghost %{_libdir}/libopenraw.so.9
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libopenraw.so
-%dir %{_includedir}/libopenraw-0.2
-%{_includedir}/libopenraw-0.2/libopenraw
-%{_pkgconfigdir}/libopenraw-0.2.pc
+%dir %{_includedir}/libopenraw-0.3
+%{_includedir}/libopenraw-0.3/libopenraw
+%{_pkgconfigdir}/libopenraw-0.3.pc
 
 %files static
 %defattr(644,root,root,755)
@@ -210,14 +208,14 @@ fi
 %files gnome
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libopenrawgnome.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libopenrawgnome.so.8
+%attr(755,root,root) %ghost %{_libdir}/libopenrawgnome.so.9
 %attr(755,root,root) %{_libdir}/gdk-pixbuf-2.0/*/loaders/libopenraw_pixbuf.so
 
 %files gnome-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libopenrawgnome.so
-%{_includedir}/libopenraw-0.2/libopenraw-gnome
-%{_pkgconfigdir}/libopenraw-gnome-0.2.pc
+%{_includedir}/libopenraw-0.3/libopenraw-gnome
+%{_pkgconfigdir}/libopenraw-gnome-0.3.pc
 
 %files gnome-static
 %defattr(644,root,root,755)
